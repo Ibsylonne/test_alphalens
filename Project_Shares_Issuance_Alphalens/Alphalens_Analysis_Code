@@ -1,0 +1,37 @@
+from numpy import nan
+from pandas import (DataFrame, date_range)
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from alphalens.tears import (create_returns_tear_sheet,
+                      create_information_tear_sheet,
+                      create_turnover_tear_sheet,
+                      create_summary_tear_sheet,
+                      create_full_tear_sheet,
+                      create_event_returns_tear_sheet,
+                      create_event_study_tear_sheet)
+
+from alphalens.utils import get_clean_factor_and_forward_returns
+
+# build price
+
+prices = pd.read_csv('prices_na.csv', delimiter=';')
+prices['date'] = pd.to_datetime(prices.date)
+prices = prices.set_index('date')
+prices.head()
+
+factor = pd.read_csv('shares_na_final.csv', delimiter=';')
+factor['date'] = pd.to_datetime(factor.date)
+factor = factor.set_index('date').stack()
+factor.head()
+
+# Ingest and format data  
+factor_data = get_clean_factor_and_forward_returns(factor,
+                                                   prices,
+                                                   quantiles=2,
+                                                   periods=(6,12,24,36,48,60),
+                                                   max_loss=1))
+
+create_full_tear_sheet(factor_data, long_short=True,)
+create_event_returns_tear_sheet(factor_data, prices,long_short=True)
+                                                   
