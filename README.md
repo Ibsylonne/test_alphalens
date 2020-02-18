@@ -1,4 +1,4 @@
-# test_alphalens
+# Factor investigation, share issaunce (Pontiff 2007)
 Run a factor_analysis using prices and shares issuance of international equities
 
 Share issuance effect had shown a strong and significant effect on future stock returns, theories support manager's intent to profit from overpriced situation by issuing shares to the market and from underpriced situations by buying back shares. (Pontiff 2007)
